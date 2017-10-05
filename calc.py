@@ -1,9 +1,9 @@
-# А где if name = main? #
+import sys
 ADD= 'Добавление'
 MIN= 'Отнимание'
 MLP= 'Умножение'
 DIV= 'Деление'
-TXT= '\n+...1\n-...2\n*...3\n/...4\n' 
+TXT= '\n+...1\n-...2\n*...3\n/...4\n'           #способ обработки
 def method(output_param):
     methods= {
         ADD: 'Вы выбрали метод: Добавление',
@@ -14,10 +14,6 @@ def method(output_param):
     }
     choose = methods.get(output_param)
     return choose
-
-def add(x, y):
-    result = x + y
-    return result
 
 def minus(x, y):
     result = x - y
@@ -30,18 +26,21 @@ def mlp(x, y):
 def div(x, y):
     result = x / y
     return result
-
-x = float(input("Введите первое число: "))
-y = float(input("Введите второе число: "))
-sposob = int(input("Введите способ обработки: {}".format(TXT)))
-
+if __name__ == '__main__':
+    x = float(input("Введите первое число: "))
+    y = float(input("Введите второе число: "))
+    sposob = int(input("Введите способ обработки: {}".format(TXT)))
 def calc():
     if sposob == 0 or sposob<0 or sposob>4:
         print("Вы выбрали 0, или число которое меньше либо больше заявленого")
+    elif x == 0 or y == 0:
+        print("Вы ввели 0")                         #если будет 0 - прога не запуститься
     elif sposob == 1:
+        z = float(input("Введите третье число: "))
+        a = float(input("Введите четвертое число: "))
         input_param = ADD
         choose = method(output_param = input_param)
-        result = add(x, y)
+        result = sum( [x, y, z, a] )                #сделал через сум, как ты говорил
         print("{}\n{}".format(choose, result))
     elif sposob == 2:
         input_param = MIN
@@ -56,9 +55,7 @@ def calc():
     elif sposob == 4:
         input_param = DIV
         choose = method(output_param = input_param)
-        # если у - будет 0? код упадет?
         result = div(x, y)
         print("{}\n{}".format(choose, result))
 calc()
-
-## 4) У пользователя должна быть возможность передать более двух значений для суммирования - только для суммирования -- Где это?
+sys.exit()
