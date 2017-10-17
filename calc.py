@@ -5,14 +5,16 @@ MIN= 'Отнимание'
 MLP= 'Умножение'
 DIV= 'Деление'
 TXT= '\n+...1\n-...2\n*...3\n/...4\n'           #способ обработки
-
+sposob_one = 1
+sposob_two = 2
+sposob_three = 3
+sposob_four = 4
 def method(output_param):
     methods= {
         ADD: 'Вы выбрали метод: Добавление',
         MIN: 'Вы выбрали метод: Отнимание',
         MLP: 'Вы выбрали метод: Умножение',
         DIV: 'Вы выбрали метод: Деление'
-        
     }
     choose = methods.get(output_param)
     return choose
@@ -27,23 +29,27 @@ def mlp(first_n, second_n):
 
 def div(first_n, second_n):
     if first_n and second_n == 0:
-        return False
+        return False # Может тут лучше вывести ошибку? тоесть чтоб пользователь знал что произошло?
     else:
         result = first_n / second_n
         return result
 
 if __name__ == '__main__':
-    first_n = float(input("Введите первое число: "))
-    second_n = float(input("Введите второе число: "))
-    sposob = int(input("Введите способ обработки: {}".format(TXT)))
+    # При воде буквы скрипт падает, необходимо сделать проверку на присутсвие букв и иных знаков таких как !%::, и т.д.
+    sposob = (input("Введите способ обработки: {}".format(TXT)))
+    if not sposob.isdigit():
+        print("Это не число")
+    else: 
+        first_n = float(input("Введите первое число: "))
+        second_n = float(input("Введите второе число: "))
 
 def calc():
     if sposob == 1:
         input_param = ADD
         choose = method(output_param = input_param)
-        list_numbers = input("Введите числа для сумирования: ")
-        result = list_numbers.split(' ')
-        result = list(map(int, result))
+        input_numbers = input("Введите числа для сумирования: ") 
+        result = input_numbers.split(' ')
+        result = list(map(float, result))  # что будет если один из  элементов списка будет буква? 
         print("{}\n{}".format(choose, sum(result, first_n+second_n)))
     elif sposob == 2:
         input_param = MIN
@@ -62,5 +68,5 @@ def calc():
         print("{}\n{}".format(choose, result))
     else:
         print("Вы выбрали 0, или число которое меньше либо больше заявленого")
-calc()
-sys.exit()
+calc()  #может вывести функцию в основной поток выполнения??
+sys.exit() # Аналогично
